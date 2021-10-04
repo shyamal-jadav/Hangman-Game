@@ -16,9 +16,9 @@ void main()
 	char a[20], b[20], d='_', x, ch;
 	system("cls");//clrscr();
 	logo();
-	printf("\n\t\tEnter number of character are used in movie :- ");
+	printf("\n\t\tEnter number of characters used in movie: ");
 	scanf("%d", &c);
-	printf("\n\t\t\tEnter movie :- ");
+	printf("\n\t\t\tEnter movie: ");
 	for(i=0;i<c;i++)
 	{
 		ch = getch();
@@ -39,7 +39,7 @@ void main()
 	while(count<c)
 	{
 		flag=0;
-		printf("\n\n\n\n\t\tEnter any character from your key board ");
+		printf("\n\n\n\n\t\tEnter any character: ");
 		x = getch();
 		for(i=0;i<c;i++)
 		{
