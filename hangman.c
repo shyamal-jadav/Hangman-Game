@@ -13,28 +13,63 @@ void logo()
 void main()
 {
 	int i, c, count=0, flag=0, temp=0;
-	char a[20], b[20], d='_', x, ch;
+	char a[50], b[50], d='_', x, ch;
+	char *next, *moviename;
+	int movieindex;
+	time_t rdnseed;
+	srand((unsigned) time(&rdnseed));
 	system("cls");//clrscr();
 	logo();
-	printf("\n\t\tEnter number of characters used in movie: ");
-	scanf("%d", &c);
-	printf("\n\t\t\tEnter movie: ");
-	for(i=0;i<c;i++)
+
+	FILE * pFile;
+	long lSize;
+	char * completelist;
+	pFile = fopen ( "movielist" , "rb" );
+	fseek (pFile , 0 , SEEK_END);
+	lSize = ftell (pFile);
+	rewind (pFile);
+	completelist = (char*) malloc (sizeof(char)*lSize);
+	fread (completelist, 1, lSize, pFile);
+	//printf("%s\n\n",completelist);
+	fclose (pFile);
+
+	movieindex=rand() % 90;
+	next = strtok(completelist, "\n");
+	while(next != NULL)
 	{
-		ch = getch();
-		a[i] = ch;
-		ch = '*';
-		printf("%c", ch);
+		if(movieindex == 0)
+		{
+			moviename=next;
+		}
+		next = strtok(NULL, "\n");
+		movieindex--;
 	}
-	printf("\n\n\n\t\t\t    *********************");
-	printf("\n\t\t\t    .....................\n\t\t\t          ");
+	//printf("\n%s\n",moviename);
+
+	for(c=0;c<50&&moviename[c]!=0;c++)
+	{
+		a[c]=moviename[c];
+	}
+
+	printf("\n\n\n\t          *****************************************");
+	printf("\n\t          .........................................\n");
+	for(i=0;i<38-(c/2);i++)
+	{
+		printf(" ");
+	}
 	for(i=0;i<c;i++)
 	{
-		printf("%c", d);
+		if( (a[i]>96 && a[i]<123) || (a[i]>64 && a[i]<91) )
+		{
+			printf("%c", d);
+		}
+		else{
+			printf("%c", a[i]);
+		}
 		b[i]=d;
 	}
-	printf("\n\t\t\t    .....................");
-	printf("\n\t\t\t    *********************");
+	printf("\n\t          .........................................");
+	printf("\n\t          *****************************************\n\n");
 
 	while(count<c)
 	{
@@ -50,16 +85,27 @@ void main()
 				temp++;
 			}
 		}
-	system("cls");	//clrscr();
+		system("cls");	//clrscr();
 		logo();
-		printf("\n\n\n\t\t\t    *********************");
-		printf("\n\t\t\t    .....................\n\t\t\t          ");
+		printf("\n\n\n\t          *****************************************");
+		printf("\n\t          .........................................\n");
+		for(i=0;i<38-(c/2);i++)
+		{
+			printf(" ");
+		}
 		for(i=0;i<c;i++)
 		{
-			printf("%c", b[i]);
+			if( (a[i]>96 && a[i]<123) || (a[i]>64 && a[i]<91) )
+			{
+				printf("%c", b[i]);
+			}
+			else
+			{
+				printf("%c", a[i]);
+			}
 		}
-		printf("\n\t\t\t    .....................");
-		printf("\n\t\t\t    *********************");
+		printf("\n\t          .........................................");
+		printf("\n\t          *****************************************\n\n");
 
 		if(flag==0)
 		{
