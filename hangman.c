@@ -19,6 +19,10 @@ void logo()
 	printf("\n\t\t\t    :::::::::::::::::::::::");
 }
 
+void error(char *msg) {
+    printf("\n%s\n", msg);
+}
+
 int main()
 {
 	int i, c, count=0, flag=0, temp=0;
@@ -34,10 +38,18 @@ int main()
 	long lSize;
 	char * completelist;
 	pFile = fopen ( "movielist" , "rb" );
+    if(pFile) {
+        error("File cannot be opened.");
+        exit(1);
+    }
 	fseek (pFile , 0 , SEEK_END);
 	lSize = ftell (pFile);
 	rewind (pFile);
 	completelist = (char*) malloc (sizeof(char)*lSize);
+    if(completelist) {
+        error("malloc() failed.");
+        exit(1);
+    }
 	fread (completelist, 1, lSize, pFile);
 	//printf("%s\n\n",completelist);
 	fclose (pFile);
@@ -147,5 +159,6 @@ int main()
 	}
 
 	getch();
+    free(completelist);
 	return 0;
 }
