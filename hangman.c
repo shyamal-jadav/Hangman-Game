@@ -1,7 +1,15 @@
 #include <stdio.h>
-#include <conio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
+
+#ifdef _WIN32
+#include <conio.h>
+#else
+#include <curses.h>
+#define system(cls) printf("\e[1;1H\e[2J")
+#endif
+
 void logo()
 {
 	printf("\n\t\t\t    :::::::::::::::::::::::");
@@ -10,7 +18,8 @@ void logo()
 	printf("\n\t\t\t    :::                 :::");
 	printf("\n\t\t\t    :::::::::::::::::::::::");
 }
-void main()
+
+int main()
 {
 	int i, c, count=0, flag=0, temp=0;
 	char a[50], b[50], d='_', x, ch;
@@ -18,7 +27,7 @@ void main()
 	int movieindex;
 	time_t rdnseed;
 	srand((unsigned) time(&rdnseed));
-	system("cls");//clrscr();
+	system("cls");
 	logo();
 
 	FILE * pFile;
@@ -138,4 +147,5 @@ void main()
 	}
 
 	getch();
+	return 0;
 }
