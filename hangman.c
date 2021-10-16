@@ -1,7 +1,15 @@
 #include <stdio.h>
-#include <conio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
+
+#ifdef _WIN32
+#include <conio.h>
+#else
+#include <curses.h>
+#define system(cls) printf("\e[1;1H\e[2J")
+#endif
+
 void logo()
 {
 	printf("\n\t\t\t    :::::::::::::::::::::::");
@@ -10,7 +18,12 @@ void logo()
 	printf("\n\t\t\t    :::                 :::");
 	printf("\n\t\t\t    :::::::::::::::::::::::");
 }
-void main()
+
+void error(char *msg) {
+    printf("\n%s\n", msg);
+}
+
+int main()
 {
 	int i, c, count=0, flag=0, temp=0;
 	char a[50], b[50], d='_', x, ch;
@@ -18,17 +31,25 @@ void main()
 	int movieindex;
 	time_t rdnseed;
 	srand((unsigned) time(&rdnseed));
-	system("cls");//clrscr();
+	system("cls");
 	logo();
 
 	FILE * pFile;
 	long lSize;
 	char * completelist;
 	pFile = fopen ( "movielist" , "rb" );
+    if(pFile) {
+        error("File cannot be opened.");
+        exit(1);
+    }
 	fseek (pFile , 0 , SEEK_END);
 	lSize = ftell (pFile);
 	rewind (pFile);
 	completelist = (char*) malloc (sizeof(char)*lSize);
+    if(completelist) {
+        error("malloc() failed.");
+        exit(1);
+    }
 	fread (completelist, 1, lSize, pFile);
 	//printf("%s\n\n",completelist);
 	fclose (pFile);
@@ -138,4 +159,6 @@ void main()
 	}
 
 	getch();
+    free(completelist);
+	return 0;
 }
