@@ -21,19 +21,19 @@ void logo() {
 int main() {
 	int i, c, count = 0, flag = 0, temp = 0;
 	char a[50], b[50], d = '_', x, ch;
-	char *next, *moviename;
-	int movieindex;
-	time_t rdnseed;
+	char *next, *movieName;
+	int movieIndex;
+	time_t rdnSeed;
 
-	srand((unsigned)time(&rdnseed));
+	srand((unsigned)time(&rdnSeed));
 	system("cls");
 	logo();
 
 	FILE *pFile;
 	long lSize;
-	char *completelist;
+	char *completeList;
 
-	pFile = fopen("movielist", "rb");
+	pFile = fopen("movieList", "rb");
 	if (pFile == NULL) {
 		perror("File cannot be opened");
 		exit(1);
@@ -43,29 +43,29 @@ int main() {
 	lSize = ftell(pFile);
 	rewind(pFile);
 
-	completelist = malloc(sizeof(char) * lSize);
-	if (completelist == NULL) {
+	completeList = malloc(sizeof(char) * lSize);
+	if (completeList == NULL) {
 		perror("malloc() failed");
 		exit(1);
 	}
 
-	fread(completelist, 1, lSize, pFile);
-	// printf("%s\n\n",completelist);
+	fread(completeList, 1, lSize, pFile);
+	// printf("%s\n\n",completeList);
 	fclose(pFile);
 
-	movieindex = rand() % 90;
-	next = strtok(completelist, "\n");
+	movieIndex = rand() % 90;
+	next = strtok(completeList, "\n");
 	while (next != NULL) {
-		if (movieindex == 0) {
-			moviename = next;
+		if (movieIndex == 0) {
+			movieName = next;
 		}
 		next = strtok(NULL, "\n");
-		movieindex--;
+		movieIndex--;
 	}
-	// printf("\n%s\n",moviename);
+	// printf("\n%s\n",movieName);
 
-	for (c = 0; c < 50 && moviename[c] != 0; c++) {
-		a[c] = moviename[c];
+	for (c = 0; c < 50 && movieName[c] != 0; c++) {
+		a[c] = movieName[c];
 	}
 
 	printf("\n\n\n\t	  ******************************************");
@@ -151,6 +151,6 @@ int main() {
 	}
 
 	getch();
-	free(completelist);
+	free(completeList);
 	return 0;
 }
